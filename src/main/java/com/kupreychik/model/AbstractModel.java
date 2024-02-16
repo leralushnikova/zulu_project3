@@ -1,7 +1,6 @@
 package com.kupreychik.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -9,5 +8,5 @@ import java.time.LocalDate;
 @Setter
 public abstract class AbstractModel {
     protected LocalDate birthday;
-    protected String phone;
+    protected String phoneNumber;
 }

@@ -1,6 +1,5 @@
 package com.kupreychik.service;
 
-import com.kupreychik.exception.JsonParseException;
 import com.kupreychik.model.Items;
 import com.kupreychik.model.Teacher;
 import com.kupreychik.service.impl.JsonParseServiceImpl;
@@ -20,7 +19,7 @@ public class TeacherServiceFromMyComputer{
     private final List<Teacher> teachers = new ArrayList<>();
 
 
-    public TeacherServiceFromMyComputer(JsonParseServiceImpl jsonParseService) {
+    public TeacherServiceFromMyComputer() {
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_TEACHERS))){
             String line;
             Scanner scanner;
@@ -51,7 +50,7 @@ public class TeacherServiceFromMyComputer{
                         }
                         case 3 -> teacher.setExperience(Integer.parseInt(data));
                         case 4 -> teacher.setBirthday(LocalDate.parse(data));
-                        case 5 -> teacher.setPhone(data);
+                        case 5 -> teacher.setPhoneNumber(data);
                     }
                     index++;
                 }
@@ -68,16 +67,4 @@ public class TeacherServiceFromMyComputer{
         return teachers;
     }
 
-   /* @Override
-    public List<String> listJson() throws JsonParseException {
-        for (int i = 0; i < teachers.size(); i++) {
-            teachers.get(i).setId((long) i + 1);
-        }
-        List<String> list = new ArrayList<>();
-        for(Teacher teacher : teachers){
-            String s = jsonParseService.writeToJson(teacher);
-            list.add(s);
-        }
-        return list;
-    }*/
 }

@@ -29,7 +29,7 @@ public class StudentServiceFromMyComputer {
                         case 0 -> student.setName(data);
                         case 1 -> student.setSurname(data);
                         case 2 -> student.setBirthday(LocalDate.parse(data));
-                        case 3 -> student.setPhone(data);
+                        case 3 -> student.setPhoneNumber(data);
                     }
                     index++;
                 }

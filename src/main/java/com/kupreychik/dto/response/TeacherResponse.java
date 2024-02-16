@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentResponse {
+public class TeacherResponse {
     private Long id;
     private String name;
     private String surname;

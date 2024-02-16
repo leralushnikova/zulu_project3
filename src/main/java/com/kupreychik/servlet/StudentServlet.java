@@ -1,24 +1,23 @@
 package com.kupreychik.servlet;
 
-import com.kupreychik.dto.response.StudentResponse;
+import com.kupreychik.dto.request.StudentRequest;
 import com.kupreychik.mapper.StudentMapper;
 import com.kupreychik.repository.StudentRepository;
+import com.kupreychik.service.AllStudentsServiceFromMyComputer;
 import com.kupreychik.service.StudentService;
 import com.kupreychik.service.impl.JsonParseServiceImpl;
-import com.kupreychik.service.AllStudentsServiceFromMyComputer;
 import com.kupreychik.service.impl.StudentServiceImpl;
-import com.sun.net.httpserver.HttpExchange;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.kupreychik.consts.RegexConsts.SIGNWEB_FORMAT;
 import static com.kupreychik.consts.WebConsts.STUDENTS_PATH;
 
 @WebServlet(STUDENTS_PATH)
@@ -29,31 +28,67 @@ public class StudentServlet extends HttpServlet {
     StudentRepository studentRepository = new StudentRepository(new CopyOnWriteArrayList<>(servlet.getStudents()));
     StudentService studentService = new StudentServiceImpl(studentRepository, jsonParseService, studentMapper);
 
+
     @Override
     @SneakyThrows
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
-        var response = studentService.getStudents();
-        List<String> listStudents = new ArrayList<>();
-        for (StudentResponse studentResponse : response) {
-            var responseAsString = jsonParseService.writeToJson(studentResponse);
-            listStudents.add(responseAsString);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        String signAfterSlash = req.getPathInfo();
+
+        String paramSurname = req.getParameter("surname");
+        String paramName = req.getParameter("name");
+
+        if (StringUtils.isNotBlank(paramSurname) && StringUtils.isNotBlank(paramName)) {
+            var responseStudent = studentService.getStudentsBySurname(paramSurname, paramName);
+            sendOk(req, resp, responseStudent);
+        } else {
+            if (signAfterSlash == null) {
+                var response = studentService.getStudents();
+                var responseAsStringStudents = jsonParseService.writeToJson(response);
+                sendOk(req, resp, responseAsStringStudents);
+            } else {
+                String id = req.getPathInfo().replace("/", "");
+                if (id.matches(SIGNWEB_FORMAT)) {
+                    var responseStudents = studentService.getStudentById(Long.parseLong(id));
+                    sendOk(req, resp, responseStudents);
+                }
+            }
         }
-        req.setAttribute("listStudents", listStudents);
+    }
+
+    @Override
+    @SneakyThrows
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        var studentRequest = jsonParseService.readObject(req.getInputStream(), StudentRequest.class);
+        sendOk(req, resp, studentService.save((StudentRequest) studentRequest));
+    }
+
+   /* @Override
+    @SneakyThrows
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    @Override
+    @SneakyThrows
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String paramSurname = req.getParameter("surname");
+        String paramName = req.getParameter("name");
+
+        if (StringUtils.isNotBlank(paramSurname) && StringUtils.isNotBlank(paramName)) {
+            var student = studentService.getStudentsBySurname(paramSurname, paramName);
+            studentService.delete(student);
+            sendOkStudent(req, resp, student);
+
+        }
+    }*/
+
+
+
+    @SneakyThrows
+    private void sendOk(HttpServletRequest req, HttpServletResponse resp, Object object) {
+        req.setAttribute("object", object);
         getServletContext().getRequestDispatcher("/students.jsp").forward(req, resp);
     }
 
-     /*@Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FileWriter writer = new FileWriter(Group1Service.fileGroup, true);
-        *//*String student = req.getParameter();
-        writer.write(student);*//*
-        writer.close();
-    }*/
-
-    private static void sendOk(HttpExchange exchange, String response) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", "application/json"); // выводит данные в формате json
-        exchange.sendResponseHeaders(200, response.length());
-        exchange.getResponseBody().write(response.getBytes());
-        exchange.close();
-    }
 }

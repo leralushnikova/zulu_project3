@@ -5,6 +5,6 @@
     <title>Students list</title>
 </head>
 <body>
-<% out.println(request.getAttribute("listStudents")); %>
+<% out.println(request.getAttribute("object")); %>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.kupreychik.dto.request;
 
-import lombok.Getter;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 public abstract class AbstractRequest {
