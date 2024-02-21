@@ -1,6 +1,6 @@
 package com.kupreychik.middleware;
 
-import com.kupreychik.dto.request.AbstractRequest;
+import com.kupreychik.dto.request.StudentRequest;
 
 public abstract class Middleware {
     private Middleware next;
@@ -14,9 +14,9 @@ public abstract class Middleware {
         return first;
     }
 
-    public abstract boolean check(AbstractRequest model);
+    public abstract boolean check(StudentRequest model);
 
-    protected boolean checkNext(AbstractRequest model) {
+    protected boolean checkNext(StudentRequest model) {
         if (next == null) {
             return true;
         }

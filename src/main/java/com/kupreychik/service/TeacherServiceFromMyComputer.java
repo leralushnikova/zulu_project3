@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 import static com.kupreychik.consts.FileConsts.FILE_TEACHERS;
 
+/**
+ * @author Valeriya Lushnikova
+ * get list Teacher from file.txt
+ */
 public class TeacherServiceFromMyComputer{
 
     private final List<Teacher> teachers = new ArrayList<>();

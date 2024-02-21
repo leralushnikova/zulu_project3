@@ -12,7 +12,6 @@ public interface StudentMapper {
 
     StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
 
-
     Student mapToModelRequest(StudentRequest dto);
 
     StudentResponse mapToResponse(Student student);

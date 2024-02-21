@@ -8,8 +8,10 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student extends AbstractModel{
+public class Student{
     private Long id;
     private String name;
     private String surname;
+    private LocalDate birthday;
+    private String phoneNumber;
 }

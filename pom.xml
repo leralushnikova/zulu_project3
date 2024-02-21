@@ -18,9 +18,18 @@
     <mockito.version>5.10.0</mockito.version>
     <jakarta.servlet-api.version>6.1.0-M1</jakarta.servlet-api.version>
     <jackson-datatype-jsr310.version>2.9.9</jackson-datatype-jsr310.version>
+    <jupiter.version>5.10.2</jupiter.version>
   </properties>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -88,6 +97,8 @@
     </dependency>
   </dependencies>
 
+
+
   <build>
     <finalName>zulu_project3</finalName>
     <plugins>
@@ -109,5 +120,13 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.txt</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
 </project>

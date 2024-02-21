@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * @author Valeriya Lushnikova
+ * get list Student from file.txt
+ */
 public class StudentServiceFromMyComputer {
     private final List<Student> list= new ArrayList<>();
 

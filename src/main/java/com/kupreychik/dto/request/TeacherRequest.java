@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherRequest extends AbstractRequest {
+public class TeacherRequest{
     private String name;
     private String surname;
+    private String birthday;
+    private String phoneNumber;
 }
