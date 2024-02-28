@@ -8,6 +8,7 @@ import com.kupreychik.mapper.TeacherMapper;
 import com.kupreychik.middleware.BirthdayMiddleware;
 import com.kupreychik.middleware.Middleware;
 import com.kupreychik.middleware.PhoneNumberMiddleware;
+import com.kupreychik.model.Items;
 import com.kupreychik.model.Teacher;
 import com.kupreychik.repository.TeacherRepository;
 import com.kupreychik.service.JsonParseService;
@@ -98,15 +99,18 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     @SneakyThrows
-    public String change(Long id,TeacherRequest teacherRequest) {
-        log.info("changeTeacher() method call with value {}", teacherRequest);
+    public String change(Long id, String item) {
+        log.info("changeTeacher() method call with value {}", item);
 
-        if (!middleware.check(teacherRequest)) {
-            return jsonParseService.writeToJson(new ErrorResponse("Cannot change teacher"));
+        try {
+            Teacher teacherToChange = teacherRepository.getTeacherById(id);
+            var result = teacherRepository.change(id, teacherToChange, item);
+            log.info(foundTeacher);
+            return jsonParseService.writeToJson(teacherMapper.mapToResponse(result));
+        } catch (NoSuchElementException e) {
+            log.error(error);
+            return jsonParseService.writeToJson(new ErrorResponse(notFoundTeacher));
         }
-        Teacher studentToChange = teacherMapper.mapToModelRequest(teacherRequest);
-        var result = teacherRepository.change(id, studentToChange);
-        return jsonParseService.writeToJson(teacherMapper.mapToResponse(result));
     }
 
 

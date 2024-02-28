@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.kupreychik.consts.FileConsts.FILE_STUDENTS_GROUP1;
+
 
 /**
  * @author Valeriya Lushnikova
@@ -18,13 +20,15 @@ import java.util.Scanner;
 public class StudentServiceFromMyComputer {
     private final List<Student> list= new ArrayList<>();
 
-    public StudentServiceFromMyComputer(String fileName) {
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
+    public StudentServiceFromMyComputer() {
+        try(BufferedReader reader = new BufferedReader(new FileReader(FILE_STUDENTS_GROUP1))){
             String line;
             Scanner scanner;
+            long id = 0;
             int index = 0;
             while ((line = reader.readLine()) != null) {
                 Student student = new Student();
+                student.setId(++id);
                 scanner = new Scanner(line);
                 scanner.useDelimiter(" ");
                 while (scanner.hasNext()) {

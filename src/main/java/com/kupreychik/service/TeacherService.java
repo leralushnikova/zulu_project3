@@ -5,6 +5,7 @@ import com.kupreychik.dto.request.TeacherRequest;
 import com.kupreychik.dto.response.TeacherResponse;
 import com.kupreychik.exception.JsonParseException;
 import com.kupreychik.exception.ModelNotFound;
+import com.kupreychik.model.Items;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface TeacherService {
 
     String save(TeacherRequest teacherRequest) throws JsonProcessingException;
     String delete(Long id) throws JsonProcessingException;
-    String change(Long id, TeacherRequest teacherRequest) throws JsonProcessingException;
+    String change(Long id, String item) throws JsonProcessingException;
 
     List<TeacherResponse> getTeachers();
 }

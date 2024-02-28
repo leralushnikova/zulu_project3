@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,6 +17,6 @@ public class TeacherRequest{
     private String surname;
     private String birthday;
     private String phoneNumber;
-    private Items item;
+    private List<Items> items;
     private Integer experience;
 }

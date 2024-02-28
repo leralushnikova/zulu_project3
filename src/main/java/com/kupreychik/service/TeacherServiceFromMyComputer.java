@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.kupreychik.consts.FileConsts.FILE_TEACHERS;
+import static com.kupreychik.model.Items.*;
 
 /**
  * @author Valeriya Lushnikova
@@ -36,20 +37,22 @@ public class TeacherServiceFromMyComputer{
 
                 while (scanner.hasNext()) {
                     String data = scanner.next();
+                    List<Items> items = new ArrayList<>();
                     Items item = null;
-
                     switch (index) {
                         case 0 -> teacher.setName(data);
                         case 1 -> teacher.setSurname(data);
                         case 2 -> {
                             switch (data) {
-                                case "MATH" -> item = Items.MATH;
-                                case "HISTORY" -> item = Items.HISTORY;
-                                case "PE" -> item = Items.PE;
-                                case "ENGLISH" -> item = Items.ENGLISH;
-                                case "BIOLOGY" -> item = Items.BIOLOGY;
+                                case "MATH" -> item = MATH;
+                                case "HISTORY" -> item = HISTORY;
+                                case "PE" -> item = PE;
+                                case "ENGLISH" -> item = ENGLISH;
+                                case "BIOLOGY" -> item = BIOLOGY;
+                                case "ECONOMIC" -> item = ECONOMIC;
                             }
-                            teacher.setItem(item);
+                            items.add(item);
+                            teacher.setItems(items);
                         }
                         case 3 -> teacher.setExperience(Integer.parseInt(data));
                         case 4 -> teacher.setBirthday(LocalDate.parse(data));

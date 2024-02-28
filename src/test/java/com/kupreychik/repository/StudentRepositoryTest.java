@@ -1,7 +1,7 @@
 package com.kupreychik.repository;
 
 import com.kupreychik.model.Student;
-import com.kupreychik.service.AllStudentsServiceFromMyComputer;
+import com.kupreychik.service.StudentServiceFromMyComputer;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 class StudentRepositoryTest {
-    AllStudentsServiceFromMyComputer servlet = new AllStudentsServiceFromMyComputer();
-    StudentRepository studentRepository = new StudentRepository(new CopyOnWriteArrayList<>(servlet.getStudents()));
+    StudentServiceFromMyComputer service = new StudentServiceFromMyComputer();
+    StudentRepository studentRepository = new StudentRepository(new CopyOnWriteArrayList<>(service.listStudents()));
 
     @Test
     void shouldFindStudent() {

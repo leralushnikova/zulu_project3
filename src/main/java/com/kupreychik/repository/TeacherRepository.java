@@ -1,12 +1,16 @@
 package com.kupreychik.repository;
 
 import com.kupreychik.exception.ModelNotFound;
+import com.kupreychik.model.Items;
 import com.kupreychik.model.Teacher;
 import com.kupreychik.service.TeacherServiceFromMyComputer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.kupreychik.model.Items.*;
+import static com.kupreychik.model.Items.ECONOMIC;
 
 public class TeacherRepository {
 
@@ -51,11 +55,23 @@ public class TeacherRepository {
         return teacher;
     }
 
-    public Teacher change(Long id, Teacher teacher){
-        for (int i = 0; i < teachers.size(); i++) {
-            if (id.equals(teachers.get(i).getId())) {
-                teacher.setId(id);
-                teachers.set(i, teacher);
+    public Teacher change(Long id, Teacher teacher, String stringItem){
+        for (Teacher value : teachers) {
+            if (id.equals(value.getId())) {
+                Items item = null;
+                switch (stringItem) {
+                    case "MATH" -> item = MATH;
+                    case "HISTORY" -> item = HISTORY;
+                    case "PE" -> item = PE;
+                    case "ENGLISH" -> item = ENGLISH;
+                    case "BIOLOGY" -> item = BIOLOGY;
+                    case "ECONOMIC" -> item = ECONOMIC;
+                }
+                if (item != null) {
+                    List<Items> listItems = teacher.getItems();
+                    listItems.add(item);
+                    teacher.setItems(listItems);
+                }
             }
         }
         return teacher;

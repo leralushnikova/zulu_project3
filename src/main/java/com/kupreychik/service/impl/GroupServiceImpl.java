@@ -9,7 +9,9 @@ import com.kupreychik.middleware.BirthdayMiddleware;
 import com.kupreychik.middleware.Middleware;
 import com.kupreychik.middleware.PhoneNumberMiddleware;
 import com.kupreychik.model.Student;
+import com.kupreychik.repository.GroupRepository;
 import com.kupreychik.repository.StudentRepository;
+import com.kupreychik.service.GroupService;
 import com.kupreychik.service.JsonParseService;
 import com.kupreychik.service.StudentService;
 import lombok.SneakyThrows;
@@ -19,27 +21,22 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
-public class StudentServiceImpl implements StudentService {
+public class GroupServiceImpl implements GroupService {
     private final String searchStudent = "Выполняется поиск студента по ";
     private final String foundStudent = "Студент нашелся";
     private final String error = "Ошибка. Такого студента нет";
     private final String notFoundStudent = "Cannot found student";
-    private final StudentRepository studentRepository;
+    private final GroupRepository groupRepositories;
     private final JsonParseService jsonParseService;
     private final StudentMapper studentMapper;
 
-    private final Middleware middleware = Middleware.link(
-            new PhoneNumberMiddleware(),
-            new BirthdayMiddleware()
-    );
-
-    public StudentServiceImpl(StudentRepository studentRepository, JsonParseService jsonParseService, StudentMapper studentMapper) {
-        this.studentRepository = studentRepository;
+    public GroupServiceImpl(JsonParseService jsonParseService, StudentMapper studentMapper, GroupRepository groupRepositories) {
+        this.groupRepositories = groupRepositories;
         this.jsonParseService = jsonParseService;
         this.studentMapper = studentMapper;
     }
 
-    @Override
+    /*@Override
     @SneakyThrows
     public String getStudentById(Long id){
         log.info(searchStudent + "id = " + id);
@@ -47,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
             Student student = studentRepository.getStudentById(id);
             log.info(foundStudent);
             return jsonParseService.writeToJson(student);
-        } catch (ModelNotFound e) {
+        } catch (NoSuchElementException e) {
             log.error(error);
             return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
         }
@@ -107,13 +104,13 @@ public class StudentServiceImpl implements StudentService {
         Student studentToChange = studentMapper.mapToModelRequest(studentRequest);
         var result = studentRepository.change(id, studentToChange);
         return jsonParseService.writeToJson(studentMapper.mapToResponse(result));
-    }
+    }*/
 
 
     @Override
     public List<StudentResponse> getStudents() {
         log.info("getStudents() method call");
-        return studentRepository.getAllStudents()
+        return groupRepositories.getAllStudents()
                 .stream()
                 .map(studentMapper::mapToResponse)
                 .toList();

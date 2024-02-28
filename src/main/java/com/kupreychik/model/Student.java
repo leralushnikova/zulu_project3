@@ -14,4 +14,5 @@ public class Student{
     private String surname;
     private LocalDate birthday;
     private String phone;
+    private Long groupId;
 }

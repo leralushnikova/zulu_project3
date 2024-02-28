@@ -1,24 +1,24 @@
 package com.kupreychik.controller;
 
-import com.kupreychik.dto.request.StudentRequest;
 import com.kupreychik.dto.response.ErrorResponse;
+import com.kupreychik.service.GroupService;
 import com.kupreychik.service.JsonParseService;
-import com.kupreychik.service.StudentService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
 
-import static com.kupreychik.consts.RegexConsts.SIGNWEB_FORMAT;
-import static com.kupreychik.consts.WebConsts.*;
+import static com.kupreychik.consts.WebConsts.GET;
+import static com.kupreychik.consts.WebConsts.GROUPS_PATH;
 
-public class StudentController implements HttpHandler {
-    private final StudentService studentService;
+
+public class GroupController implements HttpHandler {
+    private final GroupService groupService;
     private final JsonParseService jsonParseService;
 
-    public StudentController(StudentService studentService, JsonParseService jsonParseService) {
-        this.studentService = studentService;
+    public GroupController(GroupService groupService, JsonParseService jsonParseService) {
+        this.groupService = groupService;
         this.jsonParseService = jsonParseService;
     }
 
@@ -27,40 +27,26 @@ public class StudentController implements HttpHandler {
     public void handle(HttpExchange exchange){
         var requestType = exchange.getRequestMethod();
         switch (requestType) {
-            case POST -> {
+            /*case POST -> {
                 var studentRequest = jsonParseService.readObject(exchange.getRequestBody(), StudentRequest.class);
                 //если записывать на кириллице, то ответа не будет, нужно понять, где charset=UTF-8 нужно прописать?
                 sendOk(exchange, studentService.save((StudentRequest) studentRequest));
-            }
+            }*/
 
             case GET -> {
                 String responseAsString;
 
                 String url = String.valueOf(exchange.getRequestURI());
 
-                if (url.equals(STUDENT_PATH)) {
-                    var response = studentService.getStudents();
+                if (url.equals(GROUPS_PATH)) {
+                    var response = groupService.getStudents();
                     responseAsString = jsonParseService.writeToJson(response);
-                } else {
-                    if (url.contains("surname")) {
-                        String paramSurname = url.substring(url.indexOf("surname=") + 8, url.lastIndexOf("&"));
-                        String paramName = url.substring(url.indexOf("&name=") + 6);
-                        // Если в конце прописывать числа, то на выходе получаем другое имя. Почему так?
-                        responseAsString = studentService.getStudentBySurname(paramSurname, paramName);
-                    } else {
-                        String id = url.replace(STUDENT_PATH + "/", "");
-                        if (id.matches(SIGNWEB_FORMAT)) {
-                            responseAsString = studentService.getStudentById(Long.parseLong(id));
-                        } else {
-                            responseAsString = getError();
-                        }
-                    }
-                }
+                } else responseAsString = getError();
 
                 sendOk(exchange, responseAsString);
             }
 
-            case DELETE -> {
+            /*case DELETE -> {
                 String url = String.valueOf(exchange.getRequestURI());
                 String id = url.replace(STUDENT_PATH + "/", "");
                 String responseAsString;
@@ -82,7 +68,7 @@ public class StudentController implements HttpHandler {
                     responseAsString = studentService.change(Long.parseLong(id), (StudentRequest) studentRequest);
                 } else responseAsString = getError();
                 sendOk(exchange, responseAsString);
-            }
+            }*/
         }
     }
 
