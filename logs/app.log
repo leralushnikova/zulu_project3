@@ -1,0 +1,33 @@
+2024-02-28 12:16:02,262 INFO com.kupreychik.service.impl.TeacherServiceImpl [HTTP-Dispatcher] getTeachers() method call
+2024-02-28 12:16:02,286 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert object [TeacherResponse(id=1, name=Mihail, surname=Buharinov, item=MATH, experience=5, birthday=1998-01-26, phoneNumber=89512645897), TeacherResponse(id=2, name=Anna, surname=Kolikova, item=HISTORY, experience=10, birthday=1972-11-22, phoneNumber=89123696580), TeacherResponse(id=3, name=Varvara, surname=Barsukova, item=PE, experience=4, birthday=1963-06-12, phoneNumber=89587531269), TeacherResponse(id=4, name=Vitalii, surname=Smelov, item=ENGLISH, experience=15, birthday=1983-05-07, phoneNumber=89652344557), TeacherResponse(id=5, name=Artem, surname=Sedel'nikov, item=BIOLOGY, experience=2, birthday=1981-03-06, phoneNumber=89522588665)] to string
+2024-02-28 12:16:17,308 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:16:17,395 ERROR com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Cannot parse string to object
+2024-02-28 12:19:36,105 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:19:36,188 ERROR com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Cannot parse string to object
+2024-02-28 12:19:57,345 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:19:57,571 ERROR com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Cannot parse string to object
+2024-02-28 12:20:53,426 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:20:53,428 ERROR com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Cannot parse string to object
+2024-02-28 12:21:32,594 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:21:38,029 INFO com.kupreychik.service.impl.TeacherServiceImpl [HTTP-Dispatcher] saveTeacher() method call with value TeacherRequest(name=Ivan, surname=Lushnikov, birthday=2017-01-03, phoneNumber=89063565445, item=MATH, experience=null)
+2024-02-28 12:21:38,030 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Выполняется проверка номера телефона
+2024-02-28 12:21:38,086 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Проверка пройдена. Телефон подходит
+2024-02-28 12:21:38,087 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Выполняется проверка даты рождения
+2024-02-28 12:21:38,089 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Проверка пройдена. Дата подходит
+2024-02-28 12:21:52,169 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert object TeacherResponse(id=6, name=Ivan, surname=Lushnikov, item=MATH, experience=null, birthday=2017-01-03, phoneNumber=89063565445) to string
+2024-02-28 12:22:29,468 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:22:29,478 INFO com.kupreychik.service.impl.TeacherServiceImpl [HTTP-Dispatcher] saveTeacher() method call with value TeacherRequest(name=Ivan, surname=Lushnikov, birthday=2017-01-03, phoneNumber=89063565445, item=MATH, experience=6)
+2024-02-28 12:22:29,479 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Выполняется проверка номера телефона
+2024-02-28 12:22:29,481 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Проверка пройдена. Телефон подходит
+2024-02-28 12:22:29,482 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Выполняется проверка даты рождения
+2024-02-28 12:22:29,484 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Проверка пройдена. Дата подходит
+2024-02-28 12:22:29,485 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert object TeacherResponse(id=7, name=Ivan, surname=Lushnikov, item=MATH, experience=6, birthday=2017-01-03, phoneNumber=89063565445) to string
+2024-02-28 12:22:35,258 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert json class com.kupreychik.dto.request.TeacherRequest to object
+2024-02-28 12:22:35,356 INFO com.kupreychik.service.impl.TeacherServiceImpl [HTTP-Dispatcher] saveTeacher() method call with value TeacherRequest(name=Ivan, surname=Lushnikov, birthday=2017-01-03, phoneNumber=89063565445, item=MATH, experience=6)
+2024-02-28 12:22:35,362 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Выполняется проверка номера телефона
+2024-02-28 12:22:35,363 DEBUG com.kupreychik.middleware.PhoneNumberMiddleware [HTTP-Dispatcher] Проверка пройдена. Телефон подходит
+2024-02-28 12:22:35,364 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Выполняется проверка даты рождения
+2024-02-28 12:22:35,364 DEBUG com.kupreychik.middleware.BirthdayMiddleware [HTTP-Dispatcher] Проверка пройдена. Дата подходит
+2024-02-28 12:22:35,366 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert object TeacherResponse(id=6, name=Ivan, surname=Lushnikov, item=MATH, experience=6, birthday=2017-01-03, phoneNumber=89063565445) to string
+2024-02-28 12:22:40,334 INFO com.kupreychik.service.impl.TeacherServiceImpl [HTTP-Dispatcher] getTeachers() method call
+2024-02-28 12:22:40,354 INFO com.kupreychik.service.impl.JsonParseServiceImpl [HTTP-Dispatcher] Trying to convert object [TeacherResponse(id=1, name=Mihail, surname=Buharinov, item=MATH, experience=5, birthday=1998-01-26, phoneNumber=89512645897), TeacherResponse(id=2, name=Anna, surname=Kolikova, item=HISTORY, experience=10, birthday=1972-11-22, phoneNumber=89123696580), TeacherResponse(id=3, name=Varvara, surname=Barsukova, item=PE, experience=4, birthday=1963-06-12, phoneNumber=89587531269), TeacherResponse(id=4, name=Vitalii, surname=Smelov, item=ENGLISH, experience=15, birthday=1983-05-07, phoneNumber=89652344557), TeacherResponse(id=5, name=Artem, surname=Sedel'nikov, item=BIOLOGY, experience=2, birthday=1981-03-06, phoneNumber=89522588665), TeacherResponse(id=6, name=Ivan, surname=Lushnikov, item=MATH, experience=6, birthday=2017-01-03, phoneNumber=89063565445)] to string

@@ -3,7 +3,7 @@ package com.kupreychik.service.impl;
 import com.kupreychik.dto.request.StudentRequest;
 import com.kupreychik.dto.response.ErrorResponse;
 import com.kupreychik.dto.response.StudentResponse;
-import com.kupreychik.exception.JsonParseException;
+import com.kupreychik.exception.ModelNotFound;
 import com.kupreychik.mapper.StudentMapper;
 import com.kupreychik.middleware.BirthdayMiddleware;
 import com.kupreychik.middleware.Middleware;
@@ -16,9 +16,14 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 public class StudentServiceImpl implements StudentService {
+    private final String searchStudent = "Выполняется поиск студента по ";
+    private final String foundStudent = "Студент нашелся";
+    private final String error = "Ошибка. Такого студента нет";
+    private final String notFoundStudent = "Cannot found student";
     private final StudentRepository studentRepository;
     private final JsonParseService jsonParseService;
     private final StudentMapper studentMapper;
@@ -35,26 +40,30 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String getStudentById(Long id) throws JsonParseException {
-        log.info("Выполняется поиск студента");
+    @SneakyThrows
+    public String getStudentById(Long id){
+        log.info(searchStudent + "id = " + id);
         try {
             Student student = studentRepository.getStudentById(id);
-            log.info("Студент нашелся");
+            log.info(foundStudent);
             return jsonParseService.writeToJson(student);
-        } catch (Exception e) {
-            return jsonParseService.writeToJson(new ErrorResponse("По данному id ничего не найдено"));
+        } catch (NoSuchElementException e) {
+            log.error(error);
+            return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
         }
     }
 
     @Override
-    public String getStudentsBySurname(String surname, String name) throws JsonParseException {
+    @SneakyThrows
+    public String getStudentBySurname(String surname, String name) {
         log.info("Выполняется поиск студента");
         try {
             Student student = studentRepository.getStudentBySurname(surname, name);
-            log.info("Студент нашелся");
+            log.info(foundStudent);
             return jsonParseService.writeToJson(student);
-        } catch (Exception e) {
-            return jsonParseService.writeToJson(new ErrorResponse("По данным surname и name ничего не найдено"));
+        } catch (NoSuchElementException e) {
+            log.error(error);
+            return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
         }
     }
 
@@ -73,13 +82,33 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @SneakyThrows
-    public String delete(StudentResponse studentResponse){
-        log.info("deleteStudent() method call with value {}", studentResponse);
+    public String delete(Long id){
+        log.info("Выполняется поиск студента");
 
-        Student studentToDelete = studentMapper.mapToModelResponse(studentResponse);
-        var result = studentRepository.delete(studentToDelete);
+        try {
+            Student studentToDelete = studentRepository.getStudentById(id);
+            var result = studentRepository.delete(studentToDelete);
+            log.info("Студента удалось удалить из списка");
+            return jsonParseService.writeToJson(studentMapper.mapToResponse(result));
+        } catch (ModelNotFound e) {
+            log.error(error);
+            return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public String change(Long id,StudentRequest studentRequest) {
+        log.info("changeStudent() method call with value {}", studentRequest);
+
+        if (!middleware.check(studentRequest)) {
+            return jsonParseService.writeToJson(new ErrorResponse("Cannot change student"));
+        }
+        Student studentToChange = studentMapper.mapToModelRequest(studentRequest);
+        var result = studentRepository.change(id, studentToChange);
         return jsonParseService.writeToJson(studentMapper.mapToResponse(result));
     }
+
 
     @Override
     public List<StudentResponse> getStudents() {

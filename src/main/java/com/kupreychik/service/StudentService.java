@@ -10,10 +10,11 @@ import java.util.List;
 
 public interface StudentService {
     String getStudentById(Long id) throws ModelNotFound, JsonParseException;
-    String getStudentsBySurname(String surname, String name) throws ModelNotFound, JsonParseException;
+    String getStudentBySurname(String surname, String name) throws ModelNotFound, JsonParseException;
 
     String save(StudentRequest studentRequest) throws JsonProcessingException;
-    String delete(StudentResponse studentResponse) throws JsonProcessingException;
+    String delete(Long id) throws JsonProcessingException;
+    String change(Long id, StudentRequest studentRequest) throws JsonProcessingException;
 
     List<StudentResponse> getStudents();
 }

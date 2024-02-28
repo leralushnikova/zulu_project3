@@ -25,7 +25,6 @@ public class StudentServiceFromMyComputer {
             int index = 0;
             while ((line = reader.readLine()) != null) {
                 Student student = new Student();
-//                student.setId((long) list.size() + 1);
                 scanner = new Scanner(line);
                 scanner.useDelimiter(" ");
                 while (scanner.hasNext()) {
@@ -34,7 +33,7 @@ public class StudentServiceFromMyComputer {
                         case 0 -> student.setName(data);
                         case 1 -> student.setSurname(data);
                         case 2 -> student.setBirthday(LocalDate.parse(data));
-                        case 3 -> student.setPhoneNumber(data);
+                        case 3 -> student.setPhone(data);
                     }
                     index++;
                 }

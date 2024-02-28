@@ -15,6 +15,6 @@ public class Teacher{
     private Items item;
     private Integer experience;
     private LocalDate birthday;
-    private String phoneNumber;
+    private String phone;
 
 }

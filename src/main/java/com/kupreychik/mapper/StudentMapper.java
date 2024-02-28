@@ -12,9 +12,10 @@ public interface StudentMapper {
 
     StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
 
+    @Mapping(target = "phone", source = "phoneNumber")
     Student mapToModelRequest(StudentRequest dto);
 
+    @Mapping(target = "phoneNumber", source = "phone")
     StudentResponse mapToResponse(Student student);
-    Student mapToModelResponse(StudentResponse dto);
 
 }

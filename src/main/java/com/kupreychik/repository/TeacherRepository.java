@@ -2,6 +2,7 @@ package com.kupreychik.repository;
 
 import com.kupreychik.exception.ModelNotFound;
 import com.kupreychik.model.Teacher;
+import com.kupreychik.service.TeacherServiceFromMyComputer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,26 +13,24 @@ public class TeacherRepository {
     private final CopyOnWriteArrayList<Teacher> teachers;
 
     public TeacherRepository() {
-        teachers = new CopyOnWriteArrayList<>();
+        TeacherServiceFromMyComputer teacherServiceFromMyComputer = new TeacherServiceFromMyComputer();
+        teachers = new CopyOnWriteArrayList<>(teacherServiceFromMyComputer.listTeachers());
     }
 
-    public TeacherRepository(CopyOnWriteArrayList<Teacher> teachers) {
-        this.teachers = teachers;
-    }
 
-    public List<Teacher> getAllStudents(){
+    public List<Teacher> getAllTeachers(){
         return new ArrayList<>(teachers);
     }
 
 
-    public Teacher getStudentBySurname(String surname, String name) throws ModelNotFound {
+    public Teacher getTeacherBySurname(String surname, String name){
         return teachers.stream()
                 .filter(el -> (surname.equals(el.getSurname()) && name.equals(el.getName())))
                 .findFirst()
                 .orElseThrow();
     }
 
-    public Teacher getStudentById(Long id) throws ModelNotFound {
+    public Teacher getTeacherById(Long id) throws ModelNotFound {
         return teachers.stream()
                 .filter(el -> id.equals(el.getId()))
                 .findFirst()
@@ -48,6 +47,16 @@ public class TeacherRepository {
         teachers.remove(teacher);
         for (int i = 0; i < teachers.size(); i++) {
             teachers.get(i).setId((long) (i + 1));
+        }
+        return teacher;
+    }
+
+    public Teacher change(Long id, Teacher teacher){
+        for (int i = 0; i < teachers.size(); i++) {
+            if (id.equals(teachers.get(i).getId())) {
+                teacher.setId(id);
+                teachers.set(i, teacher);
+            }
         }
         return teacher;
     }

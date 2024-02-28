@@ -1,5 +1,6 @@
 package com.kupreychik.dto.request;
 
+import com.kupreychik.model.Items;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,6 @@ public class TeacherRequest{
     private String surname;
     private String birthday;
     private String phoneNumber;
+    private Items item;
+    private Integer experience;
 }

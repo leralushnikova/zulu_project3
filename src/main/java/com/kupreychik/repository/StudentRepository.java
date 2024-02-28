@@ -11,10 +11,6 @@ public class StudentRepository {
 
     private final CopyOnWriteArrayList<Student> students;
 
-    public StudentRepository() {
-        students = new CopyOnWriteArrayList<>();
-    }
-
     public StudentRepository(CopyOnWriteArrayList<Student> students) {
         this.students = students;
     }
@@ -24,7 +20,7 @@ public class StudentRepository {
     }
 
 
-    public Student getStudentBySurname(String surname, String name) throws ModelNotFound {
+    public Student getStudentBySurname(String surname, String name){
         return students.stream()
                 .filter(el -> (surname.equals(el.getSurname()) && name.equals(el.getName())))
                 .findFirst()
@@ -48,6 +44,16 @@ public class StudentRepository {
         students.remove(student);
         for (int i = 0; i < students.size(); i++) {
             students.get(i).setId((long) (i + 1));
+        }
+        return student;
+    }
+
+    public Student change(Long id, Student student){
+        for (int i = 0; i < students.size(); i++) {
+            if (id.equals(students.get(i).getId())) {
+                student.setId(id);
+                students.set(i, student);
+            }
         }
         return student;
     }

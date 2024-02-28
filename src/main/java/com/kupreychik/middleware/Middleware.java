@@ -14,9 +14,9 @@ public abstract class Middleware {
         return first;
     }
 
-    public abstract boolean check(StudentRequest model);
+    public abstract boolean check(Object model);
 
-    protected boolean checkNext(StudentRequest model) {
+    protected boolean checkNext(Object model) {
         if (next == null) {
             return true;
         }

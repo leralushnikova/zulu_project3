@@ -2,7 +2,6 @@ package com.kupreychik.service;
 
 import com.kupreychik.model.Items;
 import com.kupreychik.model.Teacher;
-import com.kupreychik.service.impl.JsonParseServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -44,17 +43,17 @@ public class TeacherServiceFromMyComputer{
                         case 1 -> teacher.setSurname(data);
                         case 2 -> {
                             switch (data) {
-                                case "математика" -> item = Items.MATH;
-                                case "история" -> item = Items.HISTORY;
-                                case "физкультура" -> item = Items.PE;
-                                case "английский" -> item = Items.ENGLISH;
-                                case "биология" -> item = Items.BIOLOGY;
+                                case "MATH" -> item = Items.MATH;
+                                case "HISTORY" -> item = Items.HISTORY;
+                                case "PE" -> item = Items.PE;
+                                case "ENGLISH" -> item = Items.ENGLISH;
+                                case "BIOLOGY" -> item = Items.BIOLOGY;
                             }
                             teacher.setItem(item);
                         }
                         case 3 -> teacher.setExperience(Integer.parseInt(data));
                         case 4 -> teacher.setBirthday(LocalDate.parse(data));
-                        case 5 -> teacher.setPhoneNumber(data);
+                        case 5 -> teacher.setPhone(data);
                     }
                     index++;
                 }
@@ -67,7 +66,7 @@ public class TeacherServiceFromMyComputer{
         }
     }
 
-    public List<Teacher> listTeacher() {
+    public List<Teacher> listTeachers() {
         return teachers;
     }
 

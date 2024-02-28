@@ -1,5 +1,6 @@
 package com.kupreychik.dto.response;
 
+import com.kupreychik.model.Items;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,8 @@ public class TeacherResponse {
     private Long id;
     private String name;
     private String surname;
+    private Items item;
+    private Integer experience;
     private LocalDate birthday;
     private String phoneNumber;
-    private Long groupId;
 }

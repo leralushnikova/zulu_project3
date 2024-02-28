@@ -1,27 +1,35 @@
 package com.kupreychik;
 
 import com.kupreychik.controller.StudentController;
+import com.kupreychik.controller.TeacherController;
 import com.kupreychik.mapper.StudentMapper;
+import com.kupreychik.mapper.TeacherMapper;
 import com.kupreychik.repository.StudentRepository;
+import com.kupreychik.repository.TeacherRepository;
 import com.kupreychik.service.AllStudentsServiceFromMyComputer;
 import com.kupreychik.service.JsonParseService;
 import com.kupreychik.service.StudentService;
+import com.kupreychik.service.TeacherService;
 import com.kupreychik.service.impl.JsonParseServiceImpl;
 import com.kupreychik.service.impl.StudentServiceImpl;
+import com.kupreychik.service.impl.TeacherServiceImpl;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.kupreychik.consts.WebConsts.STUDENTS_PATH;
 import static com.kupreychik.consts.WebConsts.STUDENT_PATH;
+import static com.kupreychik.consts.WebConsts.TEACHERS_PATH;
 
 
 public class Main {
 
+    private static final JsonParseService jsonParseService = new JsonParseServiceImpl();
+
     public static void main(String[] args){
         StudentController studentController = getStudentController();
+        TeacherController teacherController = getTeacherController();
 
         HttpServer server;
         try {
@@ -35,19 +43,24 @@ public class Main {
         }
 
         server.createContext(STUDENT_PATH, studentController);
-//        server.createContext(STUDENTS_PATH, studentController);
+        server.createContext(TEACHERS_PATH, teacherController);
         server.start();
 
     }
 
     private static StudentController getStudentController() {
-        JsonParseService jsonParseService = new JsonParseServiceImpl();
-
         StudentMapper studentMapper = StudentMapper.INSTANCE;
         AllStudentsServiceFromMyComputer servlet = new AllStudentsServiceFromMyComputer();
         StudentRepository studentRepository = new StudentRepository(new CopyOnWriteArrayList<>(servlet.getStudents()));
         StudentService studentService = new StudentServiceImpl(studentRepository, jsonParseService, studentMapper);
         return new StudentController(studentService, jsonParseService);
+    }
+
+    private static TeacherController getTeacherController() {
+        TeacherMapper teacherMapper = TeacherMapper.INSTANCE;
+        TeacherRepository teacherRepository = new TeacherRepository();
+        TeacherService teacherService = new TeacherServiceImpl(teacherRepository, jsonParseService, teacherMapper);
+        return new TeacherController(teacherService, jsonParseService);
     }
 
 

@@ -1,8 +1,9 @@
 package com.kupreychik.controller;
 
 import com.kupreychik.dto.request.StudentRequest;
+import com.kupreychik.dto.request.TeacherRequest;
 import com.kupreychik.service.JsonParseService;
-import com.kupreychik.service.StudentService;
+import com.kupreychik.service.TeacherService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.SneakyThrows;
@@ -11,12 +12,12 @@ import java.io.IOException;
 
 import static com.kupreychik.consts.WebConsts.*;
 
-public class StudentController implements HttpHandler {
-    private final StudentService studentService;
+public class TeacherController implements HttpHandler {
+    private final TeacherService teacherService;
     private final JsonParseService jsonParseService;
 
-    public StudentController(StudentService studentService, JsonParseService jsonParseService) {
-        this.studentService = studentService;
+    public TeacherController(TeacherService teacherService, JsonParseService jsonParseService) {
+        this.teacherService = teacherService;
         this.jsonParseService = jsonParseService;
     }
 
@@ -26,9 +27,9 @@ public class StudentController implements HttpHandler {
         var requestType = exchange.getRequestMethod();
         switch (requestType) {
             case POST -> {
-                var studentRequest = jsonParseService.readObject(exchange.getRequestBody(), StudentRequest.class);
+                var teacherRequest = jsonParseService.readObject(exchange.getRequestBody(), TeacherRequest.class);
                 //если записывать на кириллице, то ответа не будет, нужно понять, где charset=UTF-8 нужно прописать?
-                sendOk(exchange, studentService.save((StudentRequest) studentRequest));
+                sendOk(exchange, teacherService.save((TeacherRequest) teacherRequest));
             }
 
             case GET -> {
@@ -36,18 +37,18 @@ public class StudentController implements HttpHandler {
 
                 String url = String.valueOf(exchange.getRequestURI());
 
-                if (url.equals(STUDENT_PATH)) {
-                    var response = studentService.getStudents();
+                if (url.equals(TEACHERS_PATH)) {
+                    var response = teacherService.getTeachers();
                     responseAsString = jsonParseService.writeToJson(response);
                 } else {
                     if (url.contains("surname")) {
                         String paramSurname = url.substring(url.indexOf("surname=") + 8, url.lastIndexOf("&"));
                         String paramName = url.substring(url.indexOf("&name=") + 6);
                         // Если в конце прописывать числа, то на выходе получаем другое имя. Почему так?
-                        responseAsString = studentService.getStudentBySurname(paramSurname, paramName);
+                        responseAsString = teacherService.getTeacherBySurname(paramSurname, paramName);
                     } else {
-                        String id = url.replace(STUDENT_PATH + "/", "");
-                        responseAsString = studentService.getStudentById(Long.parseLong(id));
+                        String id = url.replace(TEACHERS_PATH + "/", "");
+                        responseAsString = teacherService.getTeacherById(Long.parseLong(id));
                     }
                 }
                 sendOk(exchange, responseAsString);
@@ -56,16 +57,16 @@ public class StudentController implements HttpHandler {
 
             case DELETE -> {
                 String url = String.valueOf(exchange.getRequestURI());
-                String id = url.replace(STUDENT_PATH + "/", "");
-                var responseAsString = studentService.delete(Long.parseLong(id));
+                String id = url.replace(TEACHERS_PATH + "/", "");
+                var responseAsString = teacherService.delete(Long.parseLong(id));
                 sendOk(exchange, responseAsString);
             }
 
             case PUT -> {
-                var studentRequest = jsonParseService.readObject(exchange.getRequestBody(), StudentRequest.class);
+                var teacherRequest = jsonParseService.readObject(exchange.getRequestBody(), StudentRequest.class);
                 String url = String.valueOf(exchange.getRequestURI());
-                String id = url.replace(STUDENT_PATH + "/", "");
-                var responseAsString = studentService.change(Long.parseLong(id), (StudentRequest) studentRequest);
+                String id = url.replace(TEACHERS_PATH + "/", "");
+                var responseAsString = teacherService.change(Long.parseLong(id), (TeacherRequest) teacherRequest);
                 sendOk(exchange, responseAsString);
             }
 
