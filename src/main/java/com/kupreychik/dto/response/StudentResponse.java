@@ -17,5 +17,5 @@ public class StudentResponse {
     private String surname;
     private LocalDate birthday;
     private String phoneNumber;
-    private Long groupId;
+    private Long groupNumber;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group {
-    private List<Student> students;
     private Long id;
-    private String number;
+    private Long number;
+    private List<Student> students;
 }

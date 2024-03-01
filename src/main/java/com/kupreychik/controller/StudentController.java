@@ -46,7 +46,7 @@ public class StudentController implements HttpHandler {
                         String paramSurname = url.substring(url.indexOf("surname=") + 8, url.lastIndexOf("&"));
                         String paramName = url.substring(url.indexOf("&name=") + 6);
                         // Если в конце прописывать числа, то на выходе получаем другое имя. Почему так?
-                        responseAsString = studentService.getStudentBySurname(paramSurname, paramName);
+                        responseAsString = studentService.getStudentBySurnameAndName(paramSurname, paramName);
                     } else {
                         String id = url.replace(STUDENT_PATH + "/", "");
                         if (id.matches(SIGNWEB_FORMAT)) {

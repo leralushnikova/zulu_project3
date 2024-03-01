@@ -42,11 +42,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @SneakyThrows
     public String getStudentById(Long id){
-        log.info(searchStudent + "id = " + id);
+        log.info(searchStudent + "id = {}" , id);
         try {
             Student student = studentRepository.getStudentById(id);
             log.info(foundStudent);
-            return jsonParseService.writeToJson(student);
+            return jsonParseService.writeToJson(studentMapper.mapToResponse(student));
         } catch (ModelNotFound e) {
             log.error(error);
             return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
@@ -55,12 +55,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @SneakyThrows
-    public String getStudentBySurname(String surname, String name) {
-        log.info("Выполняется поиск студента");
+    public String getStudentBySurnameAndName(String surname, String name) {
+        log.info(searchStudent + "surname = " + surname + " и name = " + name);
         try {
-            Student student = studentRepository.getStudentBySurname(surname, name);
+            Student student = studentRepository.getStudentBySurnameAndName(surname, name);
             log.info(foundStudent);
-            return jsonParseService.writeToJson(student);
+            return jsonParseService.writeToJson(studentMapper.mapToResponse(student));
         } catch (NoSuchElementException e) {
             log.error(error);
             return jsonParseService.writeToJson(new ErrorResponse(notFoundStudent));
@@ -83,7 +83,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @SneakyThrows
     public String delete(Long id){
-        log.info("Выполняется поиск студента");
+        log.info(searchStudent + "id = {}" , id);
 
         try {
             Student studentToDelete = studentRepository.getStudentById(id);

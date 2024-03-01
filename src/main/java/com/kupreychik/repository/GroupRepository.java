@@ -9,59 +9,48 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GroupRepository {
+    private final CopyOnWriteArrayList<Group> groups;
 
-    private final StudentRepository studentRepository;
-    private Long id;
 
-    public GroupRepository(StudentRepository studentRepository, Long id) {
-        this.studentRepository = studentRepository;
-        this.id = id;
+    public GroupRepository() {
+        groups = new CopyOnWriteArrayList<>();
     }
 
-    public List<Student> getAllStudents(){
-        List<Student> list = studentRepository.getAllStudents();
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setId((long) i + 1);
-            list.get(i).setGroupId(id);
-        }
-        return list;
+    public List<Group> getAllGroups(){
+        return new ArrayList<>(groups);
     }
 
-    /*public Student getStudentBySurname(String surname, String name){
-        return students.stream()
-                .filter(el -> (surname.equals(el.getSurname()) && name.equals(el.getName())))
+    public Group getGroupByNumber(Long number) throws ModelNotFound {
+        return groups.stream()
+                .filter(el -> number.equals(el.getNumber()))
                 .findFirst()
-                .orElseThrow();
-    }*/
+                .orElseThrow(ModelNotFound::new);
+    }
 
-    /*public Group getStudentById(Long id) throws ModelNotFound {
-        return students.stream()
+    public Group getGroupById(Long id) throws ModelNotFound {
+        return groups.stream()
                 .filter(el -> id.equals(el.getId()))
                 .findFirst()
                 .orElseThrow(ModelNotFound::new);
-    }*/
-
-    /*public Student save(Student student){
-        student.setId((long)(students.size() + 1));
-        students.add(student);
-        return student;
     }
 
-    public Student delete(Student student){
-        students.remove(student);
-        for (int i = 0; i < students.size(); i++) {
-            students.get(i).setId((long) (i + 1));
-        }
-        return student;
-    }
-
-    public Student change(Long id, Student student){
-        for (int i = 0; i < students.size(); i++) {
-            if (id.equals(students.get(i).getId())) {
-                student.setId(id);
-                students.set(i, student);
+    public Group getGroupBySurnameOfStudent(Student student){
+        for (Group group : groups) {
+            List<Student> listStudents = group.getStudents();
+            for (Student listStudent : listStudents) {
+                if (listStudent.equals(student)) {
+                    return group;
+                }
             }
         }
-        return student;
-    }*/
+        return null;
+    }
+
+
+    public Group save(Group group){
+        group.setId((long) groups.size() + 1);
+        groups.add(group);
+        return group;
+    }
+
 }

@@ -25,7 +25,7 @@ public class BirthdayMiddleware extends Middleware {
             log.debug("Проверка пройдена. Дата подходит");
             return checkNext(model);
         } catch (DateTimeParseException e) {
-            log.error("неверный формат даты. Проверьте свою дату");
+            log.error("Неверный формат даты. Проверьте свою дату");
             return false;
         }
     }

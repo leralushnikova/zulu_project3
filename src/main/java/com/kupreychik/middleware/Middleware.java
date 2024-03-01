@@ -1,6 +1,5 @@
 package com.kupreychik.middleware;
 
-import com.kupreychik.dto.request.StudentRequest;
 
 public abstract class Middleware {
     private Middleware next;

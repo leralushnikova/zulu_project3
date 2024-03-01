@@ -1,4 +1,4 @@
-package com.kupreychik.model;
+package com.kupreychik.dto.response;
 
 import lombok.*;
 
@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class TimeTable {
+@ToString
+public class TimeTableResponse {
     private Long groupId;
     private Long teacherId;
     private LocalDateTime startDateTime;

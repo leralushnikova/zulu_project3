@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentRequest{
-    private String name;
-    private String surname;
-    private String birthday;
-    private String phoneNumber;
-    private Long groupNumber;
+public class GroupRequestDouble {
+    private Long number;
+    private List<Long> students;
 }

@@ -27,9 +27,9 @@ public class TeacherRepository {
     }
 
 
-    public Teacher getTeacherBySurname(String surname, String name){
+    public Teacher getTeacherBySurname(String surname) {
         return teachers.stream()
-                .filter(el -> (surname.equals(el.getSurname()) && name.equals(el.getName())))
+                .filter(el -> (surname.equals(el.getSurname())))
                 .findFirst()
                 .orElseThrow();
     }

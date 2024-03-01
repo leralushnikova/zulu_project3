@@ -6,13 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentRequest{
-    private String name;
-    private String surname;
-    private String birthday;
-    private String phoneNumber;
-    private Long groupNumber;
+@Builder
+public class TimeTableRequest {
+    private Long groupId;
+    private Long teacherId;
+    private String startDateTime;
+    private String endDateTime;
 }

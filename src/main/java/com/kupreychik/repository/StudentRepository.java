@@ -20,9 +20,16 @@ public class StudentRepository {
     }
 
 
-    public Student getStudentBySurname(String surname, String name){
+    public Student getStudentBySurnameAndName(String surname, String name){
         return students.stream()
                 .filter(el -> (surname.equals(el.getSurname()) && name.equals(el.getName())))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public Student getStudentBySurname(String surname){
+        return students.stream()
+                .filter(el -> (surname.equals(el.getSurname())))
                 .findFirst()
                 .orElseThrow();
     }

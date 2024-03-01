@@ -40,7 +40,7 @@ class StudentRepositoryTest {
                 .name("Salavat")
                 .surname("Valitov")
                 .build();
-        Student studentFromRepository = studentRepository.getStudentBySurname(student.getSurname(), student.getName());
+        Student studentFromRepository = studentRepository.getStudentBySurnameAndName(student.getSurname(), student.getName());
         studentRepository.delete(student);
         assertNotEquals(student, studentFromRepository);
     }

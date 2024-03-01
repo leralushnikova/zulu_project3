@@ -10,7 +10,6 @@ import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import static com.kupreychik.consts.RegexConsts.SIGNWEB_FORMAT;
@@ -66,9 +65,9 @@ public class TeacherController implements HttpHandler {
                 try (InputStreamReader inputStream = new InputStreamReader(exchange.getRequestBody());
                      BufferedReader bufferedReader = new BufferedReader(inputStream)){
                     int b;
-                    StringBuilder buf = new StringBuilder();
+                    StringBuilder item = new StringBuilder();
                     while ((b = bufferedReader.read()) != -1) {
-                        buf.append((char) b);
+                        item.append((char) b);
                     }
                     String url = String.valueOf(exchange.getRequestURI());
                     String id = url.replace(TEACHERS_PATH + "/", "");
@@ -76,7 +75,7 @@ public class TeacherController implements HttpHandler {
                     String responseAsString;
 
                     if(id.matches(SIGNWEB_FORMAT)) {
-                        responseAsString = teacherService.change(Long.parseLong(id), buf.toString());
+                        responseAsString = teacherService.change(Long.parseLong(id), item.toString());
                     } else responseAsString = getError();
 
                     sendOk(exchange, responseAsString);

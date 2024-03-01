@@ -1,9 +1,9 @@
 package com.kupreychik.controller;
 
-import com.kupreychik.dto.request.GroupRequestDouble;
+import com.kupreychik.dto.request.TimeTableRequest;
 import com.kupreychik.dto.response.ErrorResponse;
-import com.kupreychik.service.GroupService;
 import com.kupreychik.service.JsonParseService;
+import com.kupreychik.service.TimeTableService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.SneakyThrows;
@@ -16,14 +16,18 @@ import static com.kupreychik.consts.RegexConsts.SIGNWEB_FORMAT;
 import static com.kupreychik.consts.WebConsts.*;
 
 
-public class GroupController implements HttpHandler {
-    private final GroupService groupService;
+public class TimeTableController implements HttpHandler {
+    private final TimeTableService timeTableService;
     private final JsonParseService jsonParseService;
 
-    public GroupController(GroupService groupService, JsonParseService jsonParseService) {
-        this.groupService = groupService;
+
+    public TimeTableController(TimeTableService timeTableService, JsonParseService jsonParseService) {
+        this.timeTableService = timeTableService;
         this.jsonParseService = jsonParseService;
     }
+
+
+
 
     @Override
     @SneakyThrows
@@ -31,9 +35,9 @@ public class GroupController implements HttpHandler {
         var requestType = exchange.getRequestMethod();
         switch (requestType) {
             case POST -> {
-                var groupRequest = jsonParseService.readObject(exchange.getRequestBody(), GroupRequestDouble.class);
+                var timeTableRequest = jsonParseService.readObject(exchange.getRequestBody(), TimeTableRequest.class);
                 //если записывать на кириллице, то ответа не будет, нужно понять, где charset=UTF-8 нужно прописать?
-                sendOk(exchange, groupService.save((GroupRequestDouble) groupRequest));
+                sendOk(exchange, timeTableService.save((TimeTableRequest) timeTableRequest));
             }
 
             case GET -> {
@@ -41,16 +45,22 @@ public class GroupController implements HttpHandler {
 
                 String url = String.valueOf(exchange.getRequestURI());
 
-                if (url.equals(GROUPS_PATH)) {
-                    var response = groupService.getGroups();
+                if (url.equals(TIMETABLE_PATH)) {
+                    var response = timeTableService.getTimeTables();
                     responseAsString = jsonParseService.writeToJson(response);
                 } else {
-                    if (url.contains("number")) {
-                        Long number = Long.parseLong(url.substring((url.indexOf("=") + 1)));
-                        responseAsString = groupService.getGroupByNumber(number);
-                    } else if (url.contains("surname")) {
-                        String paramSurname = url.substring((url.indexOf("=") + 1));
-                        responseAsString = groupService.getGroupBySurnameOfStudent(paramSurname);
+                    String param = url.substring((url.indexOf("=") + 1));
+                    if(url.contains("groupNumber")){
+                        if(param.matches(SIGNWEB_FORMAT)) {
+                            responseAsString = timeTableService.getTimeTableByNumberOfGroup(Long.parseLong(param));
+                        } else responseAsString = getError();
+                    } else if(url.contains("studentSurname")){
+                        responseAsString = timeTableService.getTimeTableBySurnameOfStudent(param);
+                    } else if(url.contains("teacherSurname")){
+                        responseAsString = timeTableService.getTimeTableBySurnameOfTeacher(param);
+                    } else if(url.contains("date")){
+                        responseAsString = timeTableService.getTimeTableByDate(param);
+
                     } else responseAsString = getError();
                 }
 
@@ -62,19 +72,15 @@ public class GroupController implements HttpHandler {
                 try (InputStreamReader inputStream = new InputStreamReader(exchange.getRequestBody());
                      BufferedReader bufferedReader = new BufferedReader(inputStream)){
                     int b;
-                    StringBuilder idStudent = new StringBuilder();
+                    StringBuilder changeHours = new StringBuilder();
                     while ((b = bufferedReader.read()) != -1) {
-                        idStudent.append((char) b);
+                        changeHours.append((char) b);
                     }
                     String responseAsString;
                     String url = String.valueOf(exchange.getRequestURI());
-                    String idGroup = url.replace(GROUPS_PATH + "/", "");
+                    String param = url.substring((url.indexOf("=") + 1));
 
-                    if (idGroup.matches(SIGNWEB_FORMAT) && idStudent.toString().matches(SIGNWEB_FORMAT)) {
-                        responseAsString = groupService.addStudentInGroup(Long.parseLong(idGroup), Long.parseLong(idStudent.toString()));
-                    } else {
-                        responseAsString = getError();
-                    }
+                    responseAsString = timeTableService.changeTimeTableByDate(changeHours.toString(), param);
 
                     sendOk(exchange, responseAsString);
                 }

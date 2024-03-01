@@ -8,7 +8,6 @@ import com.kupreychik.mapper.TeacherMapper;
 import com.kupreychik.middleware.BirthdayMiddleware;
 import com.kupreychik.middleware.Middleware;
 import com.kupreychik.middleware.PhoneNumberMiddleware;
-import com.kupreychik.model.Items;
 import com.kupreychik.model.Teacher;
 import com.kupreychik.repository.TeacherRepository;
 import com.kupreychik.service.JsonParseService;
@@ -21,8 +20,6 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 public class TeacherServiceImpl implements TeacherService {
-    private final String searchTeacher = "Выполняется поиск учителя по ";
-    private final String foundTeacher = "Учитель нашелся";
     private final String error = "Ошибка. Такого учителя нет";
     private final String notFoundTeacher = "Cannot found teacher";
     private final TeacherRepository teacherRepository;
@@ -42,34 +39,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     @SneakyThrows
-    public String getTeacherById(Long id){
-        log.info(searchTeacher + "id = " + id);
-        try {
-            Teacher teacher = teacherRepository.getTeacherById(id);
-            log.info(foundTeacher);
-            return jsonParseService.writeToJson(teacher);
-        } catch (NoSuchElementException e) {
-            log.error(error);
-            return jsonParseService.writeToJson(new ErrorResponse(notFoundTeacher));
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public String getTeacherBySurname(String surname, String name) {
-        log.info(searchTeacher + "имени и фамилии" + surname + " " + name);
-        try {
-            Teacher teacher = teacherRepository.getTeacherBySurname(surname, name);
-            log.info(foundTeacher);
-            return jsonParseService.writeToJson(teacher);
-        } catch (NoSuchElementException e) {
-            log.error(error);
-            return jsonParseService.writeToJson(new ErrorResponse(notFoundTeacher));
-        }
-    }
-
-    @Override
-    @SneakyThrows
     public String save(TeacherRequest teacherRequest) {
         log.info("saveTeacher() method call with value {}", teacherRequest);
 
@@ -84,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @SneakyThrows
     public String delete(Long id){
-        log.info(searchTeacher);
+        log.info("Выполняется поиск учителя");
 
         try {
             Teacher teacherToDelete = teacherRepository.getTeacherById(id);
@@ -105,6 +74,7 @@ public class TeacherServiceImpl implements TeacherService {
         try {
             Teacher teacherToChange = teacherRepository.getTeacherById(id);
             var result = teacherRepository.change(id, teacherToChange, item);
+            String foundTeacher = "Учитель нашелся";
             log.info(foundTeacher);
             return jsonParseService.writeToJson(teacherMapper.mapToResponse(result));
         } catch (NoSuchElementException e) {
