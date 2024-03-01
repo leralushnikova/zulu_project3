@@ -1,0 +1,532 @@
+{
+	"info": {
+		"_postman_id": "797047e7-d5de-4b8c-8e76-ba041e41a8da",
+		"name": "Zulu_project3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32140327"
+	},
+	"item": [
+		{
+			"name": "Create Student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ivan\",\r\n    \"surname\": \"Lushnikov\",\r\n    \"birthday\": \"2017-01-03\",\r\n    \"phoneNumber\": \"89063565445\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/students",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get student Surname",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students?surname=Karackchiev&name=Artem",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students"
+					],
+					"query": [
+						{
+							"key": "surname",
+							"value": "Karackchiev"
+						},
+						{
+							"key": "name",
+							"value": "Artem"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get student Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students/11",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Strudent",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Lera\",\r\n        \"surname\": \"Lushnikova\",\r\n        \"birthday\": \"2017-01-03\",\r\n        \"phoneNumber\": \"89063565445\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/students/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all  teachers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/teachers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Teacher",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ivan\",\r\n    \"surname\": \"Lushnikov\",\r\n    \"birthday\": \"2017-01-03\",\r\n    \"phoneNumber\": \"89063565445\", \r\n    \"items\" : [\"MATH\"], \r\n    \"experience\": \"6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/teachers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Teacher",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/teachers/5",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"teachers",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get teacher",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/teachers/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"teachers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Teacher Item Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "ECONOMIC",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/teachers/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"teachers",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/groups",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Group",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"521325\", \r\n    \"students\" : [6, 7, 8, 9, 10]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/groups",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get group Number",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/groups?number=521325",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"groups"
+					],
+					"query": [
+						{
+							"key": "number",
+							"value": "521325"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Students Surname from Group",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/groups?surname=Lemko",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"groups"
+					],
+					"query": [
+						{
+							"key": "surname",
+							"value": "Lemko"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Student in Group",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "11",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/groups/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"groups",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Timetable",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/timetable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create TimeTable",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"groupId\" : 1,\r\n\t\"teacherId\" : 3,\r\n\t\"startDateTime\" : \"2024-05-12 12:00\",\r\n    \"endDateTime\" : \"2024-05-12 14:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/timetable",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TimeTable for Group",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/timetable?groupNumber=521325",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					],
+					"query": [
+						{
+							"key": "groupNumber",
+							"value": "521325"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TimeTable for Student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/timetable?studentSurname=Kluchkin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					],
+					"query": [
+						{
+							"key": "studentSurname",
+							"value": "Kluchkin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TimeTable for Teacher",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/timetable?teacherSurname=Barsukova",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					],
+					"query": [
+						{
+							"key": "teacherSurname",
+							"value": "Barsukova"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TimeTable by Date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/timetable?date=12/05/2024",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "12/05/2024"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change TimeTable by Date",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "13:00",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/timetable?date=12/05/2024",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"timetable"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "12/05/2024"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
