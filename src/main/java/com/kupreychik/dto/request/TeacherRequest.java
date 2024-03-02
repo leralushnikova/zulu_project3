@@ -1,0 +1,22 @@
+package com.kupreychik.dto.request;
+
+import com.kupreychik.model.Items;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class TeacherRequest{
+    private String name;
+    private String surname;
+    private String birthday;
+    private String phoneNumber;
+    private List<Items> items;
+    private Integer experience;
+}
